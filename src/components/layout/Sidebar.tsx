@@ -29,7 +29,6 @@ type NavItemProps = {
   isExpanded?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
-  shortcut?: string;
   description?: string;
 };
 
@@ -42,7 +41,6 @@ const NavItem: React.FC<NavItemProps> = ({
   isExpanded = false, 
   onClick, 
   children,
-  shortcut,
   description
 }) => {
   return (
@@ -59,11 +57,6 @@ const NavItem: React.FC<NavItemProps> = ({
       >
         <span className="mr-3">{icon}</span>
         <span className="flex-1">{title}</span>
-        {shortcut && (
-          <span className="hidden lg:inline-block text-xs text-gray-500 group-hover:text-gray-700">
-            {shortcut}
-          </span>
-        )}
         {hasSubMenu && (
           <span className="ml-auto">
             {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
@@ -109,7 +102,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           title="Dashboard" 
           path="/" 
           isActive={location.pathname === '/'}
-          shortcut="Ctrl+D"
           description="Overview of key metrics and activities"
         />
         
@@ -122,7 +114,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           hasSubMenu={true}
           isExpanded={expandedMenu === 'students'}
           onClick={() => toggleSubMenu('students')}
-          shortcut="Ctrl+S"
           description="Manage student profiles and performance"
         >
           <Link 
@@ -166,7 +157,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           hasSubMenu={true}
           isExpanded={expandedMenu === 'quizzes'}
           onClick={() => toggleSubMenu('quizzes')}
-          shortcut="Ctrl+Q"
           description="Manage quizzes and question bank"
         >
           <Link 
@@ -220,7 +210,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           hasSubMenu={true}
           isExpanded={expandedMenu === 'analytics'}
           onClick={() => toggleSubMenu('analytics')}
-          shortcut="Ctrl+A"
           description="View detailed analytics and reports"
         >
           <Link 
@@ -264,7 +253,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           hasSubMenu={true}
           isExpanded={expandedMenu === 'payments'}
           onClick={() => toggleSubMenu('payments')}
-          shortcut="Ctrl+P"
           description="Manage payments and subscriptions"
         >
           <Link 
@@ -307,7 +295,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           title="Settings" 
           path="/settings" 
           isActive={location.pathname === '/settings'}
-          shortcut="Ctrl+,"
           description="System settings and preferences"
         />
 
@@ -316,7 +303,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
           title="Help & Support" 
           path="/support" 
           isActive={location.pathname === '/support'}
-          shortcut="Ctrl+H"
           description="Get help and documentation"
         />
 
@@ -326,7 +312,6 @@ const Sidebar: React.FC<{ isMobileOpen: boolean; toggleMobileSidebar: () => void
             title="Logout" 
             path="/logout" 
             isActive={false}
-            shortcut="Ctrl+L"
             description="Sign out of your account"
           />
         </div>
