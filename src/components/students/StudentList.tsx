@@ -94,6 +94,7 @@ const StudentList: React.FC = () => {
   const [subscriptionFilter, setSubscriptionFilter] = useState<'all' | 'Basic' | 'Premium'>('all');
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [visibleStudents, setVisibleStudents] = useState(10);
   
   // Sorting function
   const handleSort = (field: SortField) => {
@@ -146,6 +147,11 @@ const StudentList: React.FC = () => {
       }
       return 0;
     });
+
+  // Load more students
+  const loadMore = () => {
+    setVisibleStudents(prevVisibleStudents => prevVisibleStudents + 10);
+  };
 
   // Render sort indicator
   const renderSortIndicator = (field: SortField) => {
@@ -259,7 +265,7 @@ const StudentList: React.FC = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredAndSortedStudents.map((student) => (
+            {filteredAndSortedStudents.slice(0, visibleStudents).map((student) => (
               <tr key={student.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
@@ -314,50 +320,13 @@ const StudentList: React.FC = () => {
       </div>
       
       {/* Pagination */}
-      <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-        <div className="flex-1 flex justify-between sm:hidden">
-          <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-            Previous
-          </button>
-          <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-            Next
-          </button>
-        </div>
-        <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm text-gray-700">
-              Showing <span className="font-medium">1</span> to <span className="font-medium">8</span> of{' '}
-              <span className="font-medium">20</span> results
-            </p>
-          </div>
-          <div>
-            <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-              <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span className="sr-only">Previous</span>
-                <ChevronDown className="h-5 w-5 transform rotate-90" />
-              </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                1
-              </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                2
-              </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-blue-500 bg-blue-50 text-sm font-medium text-blue-600 hover:bg-blue-100">
-                3
-              </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                4
-              </button>
-              <button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
-                5
-              </button>
-              <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                <span className="sr-only">Next</span>
-                <ChevronDown className="h-5 w-5 transform -rotate-90" />
-              </button>
-            </nav>
-          </div>
-        </div>
+      <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-center">
+        <button 
+          className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+          onClick={loadMore}
+        >
+          Load more
+        </button>
       </div>
     </div>
   );
